@@ -9,4 +9,6 @@ public class Constants {
     public static final String SECTION_TYPE = "section_type";
     public static final String INGREDIENTS = "ingredients";
     public static final String STEPS = "steps";
+
+    public static final String ACTION_SHOW_PREVIOUS_RECIPE = "show_previous_recipe";
 }

@@ -75,10 +75,6 @@ public class WidgetServiceListIngredients extends RemoteViewsService {
         @Override
         public RemoteViews getViewAt(int i) {
 
-//            TODO (2): Agora, em cada um dos RemoteViewServices, devemos criar um intent e preenche-lo
-//             com os parâmetros extras desejados. No caso o tipo de lista que estamos clicando
-//             (ingredientes ou etapas) e o identificador da receita exibida no widget.
-
             RemoteViews views;
             Bundle extras = new Bundle();
             extras.putString(SECTION_TYPE, INGREDIENTS);
@@ -86,9 +82,6 @@ public class WidgetServiceListIngredients extends RemoteViewsService {
 
             Intent fillInIntent = new Intent();
             fillInIntent.putExtras(extras);
-
-//            TODO (3): Depois de criado, para preencher o pendingIntentTemplate, usamos
-//             setOnClickFillInIntent ligando a view a ser clicada e o intent recem criado
 
             if (ingredientsList.get(i).contains("--")) {
                 views = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_view_item_header);

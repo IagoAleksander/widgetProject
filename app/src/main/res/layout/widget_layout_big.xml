@@ -1,26 +1,62 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/button_background"
-    android:padding="@dimen/widget_margin"
     android:id="@+id/widget_layout"
-    android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/button_background"
+    android:orientation="vertical"
+    android:padding="@dimen/widget_margin">
 
-    <TextView
+<!--    TODO (1): Botões foram adicionados no widget para a troca de receitas-->
+
+    <RelativeLayout
+        android:id="@+id/layout_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:drawableStart="@drawable/ic_navigate_before_black"
+            android:minWidth="120dp"
+            android:minHeight="36dp"
+            android:text="anterior"
+            android:textAllCaps="true"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:background="@null"
+            android:drawableEnd="@drawable/ic_navigate_next_black"
+            android:minWidth="120dp"
+            android:minHeight="36dp"
+            android:text="proxima"
+            android:textAllCaps="true"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <ListView
         android:id="@+id/widget_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_below="@id/layout_buttons"
+        android:layout_marginBottom="2dp"
+        tools:layout_height="50dp"/>
 
     <LinearLayout
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_below="@+id/widget_title"
         android:background="@color/colorAccent"
-        android:orientation="vertical"
-        android:layout_below="@id/widget_title"/>
+        android:orientation="vertical" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -93,5 +129,6 @@
 
 
     </LinearLayout>
+
 
 </RelativeLayout>

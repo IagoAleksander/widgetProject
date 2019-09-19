@@ -59,11 +59,6 @@ public class RecipeActivity extends AppCompatActivity {
         if (getSupportActionBar() != null)
             getSupportActionBar().setTitle(recipeName);
 
-
-//        TODO (5): Modificações necessárias para o tratamento personalizado da intent adicionadas
-//         pela analise do parametro sectionType
-
-
         if (sectionType == null || sectionType.equals(INGREDIENTS)) {
             // recover ingredients of chosen recipe from database to list
             // (rxJava used to access database from computation thread)

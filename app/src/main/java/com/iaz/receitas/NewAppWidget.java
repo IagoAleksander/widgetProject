@@ -3,12 +3,15 @@ package com.iaz.receitas;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.RemoteViews;
 
 import com.iaz.receitas.presentation.ui.activities.RecipeActivity;
+
+import static com.iaz.receitas.util.Constants.ACTION_SHOW_PREVIOUS_RECIPE;
 
 /**
  * Implementation of App Widget functionality.
@@ -34,7 +37,8 @@ public class NewAppWidget extends AppWidgetProvider {
         else
             views = new RemoteViews(context.getPackageName(), R.layout.widget_layout_big);
 
-        views.setTextViewText(R.id.widget_title, recipeName);
+        Intent intent = new Intent(context, WidgetServiceRecipeTitle.class);
+        views.setRemoteAdapter(R.id.widget_title, intent);
 
         Intent updateIngredientsListIntent = new Intent(context, WidgetServiceListIngredients.class);
         views.setRemoteAdapter(R.id.widget_list_ingredients, updateIngredientsListIntent);
@@ -42,11 +46,15 @@ public class NewAppWidget extends AppWidgetProvider {
         if (width > 300) {
             Intent updateStepsListIntent = new Intent(context, WidgetServiceListSteps.class);
             views.setRemoteAdapter(R.id.widget_list_steps, updateStepsListIntent);
-        }
 
-//        TODO (1): Crie um intent para abrir a tela de detalhes da receita quando clicado
-//                encapsule o intent em um PendingIntent e ligue uma collectionView com esse PendingIntent
-//                utilizando um PendingIntentTemplate. Faremos isso para as listas de ingredientes e modo de preparo.
+            Intent broadcastPreviousRecipeIntent = new Intent(context, NewAppWidget.class);
+            broadcastPreviousRecipeIntent.setAction(ACTION_SHOW_PREVIOUS_RECIPE);
+            PendingIntent broadcastPreviousRecipePendingIntent = PendingIntent.getBroadcast(context, 0, broadcastPreviousRecipeIntent, 0);
+            views.setOnClickPendingIntent(R.id.button, broadcastPreviousRecipePendingIntent);
+
+//            TODO (2): Replicar as configurações acima para o botão de próxima receita
+
+        }
 
         Intent appIntent;
         appIntent = new Intent(context, RecipeActivity.class);
@@ -65,6 +73,7 @@ public class NewAppWidget extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
+//    TODO (5): Remover recipeName
     public static void updateWidgets(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds, Long recipeIdForWidget, String recipeNameForWidget) {
 
         if (recipeIdForWidget != null) {
@@ -77,6 +86,7 @@ public class NewAppWidget extends AppWidgetProvider {
 
         if (recipeId != null) {
             // aqui notificamos o adapter de que os dados correspondentes foram atualizados
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_title);
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list_ingredients);
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list_steps);
 
@@ -90,6 +100,23 @@ public class NewAppWidget extends AppWidgetProvider {
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
         updateAppWidget(context, appWidgetManager, appWidgetId);
+    }
+
+    // TODO (3): Para capturar essa transmissão, sobrescrevemos o método onReceive do Provider e definimos a ação desejada.
+    //  No caso, mudar a receita exibida no widget.
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, NewAppWidget.class));
+
+        if (ACTION_SHOW_PREVIOUS_RECIPE.equals(intent.getAction())) {
+            NewAppWidget.updateWidgets(context, appWidgetManager, appWidgetIds, recipeId-1);
+        }
+
+        // TODO (4): Replique para o botão de próximo
     }
 }
 
