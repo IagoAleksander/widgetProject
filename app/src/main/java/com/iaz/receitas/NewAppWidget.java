@@ -37,7 +37,7 @@ public class NewAppWidget extends AppWidgetProvider {
         views.setTextViewText(R.id.widget_title, recipeName);
 
         Intent updateIngredientsListIntent = new Intent(context, WidgetServiceListIngredients.class);
-        views.setRemoteAdapter(R.id.widget_list_view, updateIngredientsListIntent);
+        views.setRemoteAdapter(R.id.widget_list_ingredients, updateIngredientsListIntent);
 
 
 //        TODO (5): Caso o layout utilizado contenha a lista de etapas de preparação da receita,
@@ -60,7 +60,7 @@ public class NewAppWidget extends AppWidgetProvider {
 
         if (recipeId != null) {
             // aqui notificamos o adapter de que os dados correspondentes foram atualizados
-            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list_view);
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list_ingredients);
 
 //            TODO (6): Notificamos também o adapter da lista de etapas de que suas informações foram atualizadas
 

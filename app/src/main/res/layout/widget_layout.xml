@@ -24,7 +24,7 @@
         android:layout_below="@id/widget_title"/>
 
     <ListView
-        android:id="@+id/widget_list_view"
+        android:id="@+id/widget_list_ingredients"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="2dp"
