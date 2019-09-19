@@ -80,7 +80,13 @@ public class WidgetServiceListIngredients extends RemoteViewsService {
 //                    usando setTextViewText para ligar essa informação com o TextView
 //                    do layout que acabou de ser criado
 
-            views.setTextViewText(R.id.widget_list_view_item, ingredientsList.get(i));
+            if (ingredientsList.get(i).contains("--")) {
+                views = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_view_item_header);
+                views.setTextViewText(R.id.widget_list_view_item_header, ingredientsList.get(i));
+            } else {
+                views = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_view_item_standard);
+                views.setTextViewText(R.id.widget_list_view_item, ingredientsList.get(i));
+            }
 
             return views;
         }
@@ -92,7 +98,7 @@ public class WidgetServiceListIngredients extends RemoteViewsService {
 
         @Override
         public int getViewTypeCount() {
-            return 1;
+            return 2;
         }
 
         @Override
