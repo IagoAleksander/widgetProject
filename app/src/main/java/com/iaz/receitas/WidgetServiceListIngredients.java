@@ -94,13 +94,13 @@ public class WidgetServiceListIngredients extends RemoteViewsService {
                 views = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_view_item_header);
                 views.setTextViewText(R.id.widget_list_view_item_header, ingredientsList.get(i));
 
-                views.setOnClickFillInIntent(R.id.widget_grid_view_item_header, fillInIntent);
+                views.setOnClickFillInIntent(R.id.widget_list_view_item_header, fillInIntent);
 
             } else {
                 views = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_view_item_standard);
                 views.setTextViewText(R.id.widget_list_view_item, ingredientsList.get(i));
 
-                views.setOnClickFillInIntent(R.id.widget_grid_view_item, fillInIntent);
+                views.setOnClickFillInIntent(R.id.widget_list_view_item, fillInIntent);
 
             }
 
