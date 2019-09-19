@@ -12,6 +12,7 @@ import com.iaz.receitas.database.models.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
+import static com.iaz.receitas.NewAppWidget.recipeId;
 
 public class WidgetServiceListIngredients extends RemoteViewsService {
     private List<String> ingredientsList;
@@ -78,6 +79,8 @@ public class WidgetServiceListIngredients extends RemoteViewsService {
 //            TODO (3): Popule cada item da lista com um dos ingredientes da receita
 //                    usando setTextViewText para ligar essa informação com o TextView
 //                    do layout que acabou de ser criado
+
+            views.setTextViewText(R.id.widget_list_view_item, ingredientsList.get(i));
 
             return views;
         }

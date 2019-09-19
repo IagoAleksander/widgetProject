@@ -16,23 +16,28 @@ import com.iaz.receitas.presentation.ui.activities.RecipeActivity;
 
 public class NewAppWidget extends AppWidgetProvider {
 
-//    TODO (4): Para sabermos qual a receita em questão, precisamos adicionar um identificador recipeId
+    //    TODO (4): Para sabermos qual a receita em questão, precisamos adicionar um identificador recipeId
+    static Long recipeId;
+    static String recipeName;
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
 
 //        TODO (7): Atualizamos então o layout referenciado pela RemoteView
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.new_app_widget);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
 
 
 //        TODO (8): E atualizamos as propriedades das views criadas
+        views.setTextViewText(R.id.widget_title, recipeName);
 
+        Intent updateIngredientsListIntent = new Intent(context, WidgetServiceListIngredients.class);
+        views.setRemoteAdapter(R.id.widget_list_view, updateIngredientsListIntent);
 
 
         Intent intent = new Intent(context, RecipeActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
+//        views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
 
 
         // Instruct the widget manager to update the widget
@@ -40,25 +45,26 @@ public class NewAppWidget extends AppWidgetProvider {
     }
 
 
-
-//    TODO (6) : Como nao precisaremos atualizar o widget de tempos em tempos, o método onUpdate será substituido
+    //    TODO (6) : Como nao precisaremos atualizar o widget de tempos em tempos, o método onUpdate será substituido
 //            por outro que aceite o id e o nome da receita como parametros
-    @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // There may be multiple widgets active, so update all of them
-        for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId);
+    public static void updateWidgets(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds, Long recipeIdForWidget, String recipeNameForWidget) {
+
+        if (recipeIdForWidget != null) {
+            recipeId = recipeIdForWidget;
         }
-    }
 
-    @Override
-    public void onEnabled(Context context) {
-        // Enter relevant functionality for when the first widget is created
-    }
+        if (recipeNameForWidget != null) {
+            recipeName = recipeNameForWidget;
+        }
 
-    @Override
-    public void onDisabled(Context context) {
-        // Enter relevant functionality for when the last widget is disabled
+        if (recipeId != null) {
+            // aqui notificamos o adapter de que os dados correspondentes foram atualizados
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list_view);
+
+            for (int appWidgetId : appWidgetIds) {
+                updateAppWidget(context, appWidgetManager, appWidgetId);
+            }
+        }
     }
 }
 
