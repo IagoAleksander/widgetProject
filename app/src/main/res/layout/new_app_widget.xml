@@ -6,10 +6,6 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <!--TODO (1): customize o arquivo de layout. -->
-    <!--    Aqui é definido como será a aparência do widget -->
-    <!--    quando adicionado na home screen-->
-
     <TextView
         android:id="@+id/appwidget_text"
         android:layout_width="wrap_content"

@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--TODO (2): customize os metadados do widget-->
-<!-- aqui as configurações de layout inicial, tamanho, -->
-<!-- imagem de pré-visualização (icone que é exibido na lista-->
-<!-- de widgets do aparelho), frequencia de atualização do-->
-<!-- widget, entre outras são definidas-->
-
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialKeyguardLayout="@layout/new_app_widget"
     android:initialLayout="@layout/new_app_widget"

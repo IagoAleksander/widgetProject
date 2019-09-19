@@ -16,20 +16,19 @@ import com.iaz.receitas.presentation.ui.activities.RecipeActivity;
 
 public class NewAppWidget extends AppWidgetProvider {
 
+//    TODO (4): Para sabermos qual a receita em questão, precisamos adicionar um identificador recipeId
+
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
 
-//        TODO (3): Como removemos o textView do layout do widget, não é mais
-//         necessária sua atualização. Assim, devemos remove-lo.
-
-        // Construct the RemoteViews object
+//        TODO (7): Atualizamos então o layout referenciado pela RemoteView
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.new_app_widget);
 
-//        TODO (4): Habilitar a abertura do aplicativo através da
-//         - criaçao de um Intent para a mainActivity
-//         - encapsulamento desse intent por um PendingIntent
-//         - ligação de uma view com o PendingIntent criado.
+
+//        TODO (8): E atualizamos as propriedades das views criadas
+
+
 
         Intent intent = new Intent(context, RecipeActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
@@ -42,6 +41,8 @@ public class NewAppWidget extends AppWidgetProvider {
 
 
 
+//    TODO (6) : Como nao precisaremos atualizar o widget de tempos em tempos, o método onUpdate será substituido
+//            por outro que aceite o id e o nome da receita como parametros
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them

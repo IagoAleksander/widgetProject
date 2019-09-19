@@ -1,6 +1,8 @@
 package com.iaz.receitas.presentation.ui.activities;
 
 import android.annotation.SuppressLint;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -8,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.iaz.receitas.NewAppWidget;
 import com.iaz.receitas.R;
 import com.iaz.receitas.database.AppDatabase;
 import com.iaz.receitas.database.models.Ingredient;
@@ -16,6 +19,7 @@ import com.iaz.receitas.databinding.ActivityRecipeBinding;
 import com.iaz.receitas.presentation.ui.adapters.RecipeIngredientsAdapter;
 import com.iaz.receitas.presentation.ui.adapters.RecipeStepsAdapter;
 
+import java.security.Provider;
 import java.util.ArrayList;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -62,6 +66,7 @@ public class RecipeActivity extends AppCompatActivity {
 
                 });
 
+//        TODO (5): E passar o identificador para o Provider
 
     }
 
