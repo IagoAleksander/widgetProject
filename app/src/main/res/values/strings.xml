@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Receitas</string>
+
+    <string name="select_recipe_header">Selecione uma receita:</string>
+    <string name="choose_recipe_header">Escolha uma receita</string>
+    <string name="recipe_ingredients_header">Ingredientes:</string>
+    <string name="recipe_steps_header">Modo de preparo:</string>
+
+    <string name="recipe_steps_button">Modo de preparo</string>
+    <string name="recipe_ingredients_button">Ingredientes</string>
+    <string name="appwidget_text">receita</string>
+    <string name="servings">"Porções:"</string>
+</resources>
