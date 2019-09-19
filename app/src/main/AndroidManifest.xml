@@ -37,6 +37,8 @@
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
 <!--        TODO (7): E o adicionamos ao manifest-->
-        
+        <service
+            android:name=".WidgetServiceListSteps"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 </manifest>

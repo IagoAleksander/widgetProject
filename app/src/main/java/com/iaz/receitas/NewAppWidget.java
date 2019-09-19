@@ -19,20 +19,24 @@ public class NewAppWidget extends AppWidgetProvider {
 
     static Long recipeId;
     static String recipeName;
+    static int width;
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
 //        TODO (3): Obter a largura do widget para decisão de qual layout será utilizado
 //         atraves do appWidgetmanager
-
+        Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
+        width = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
 
 
 //        TODO (4): Escolher o layout baseado na largura obtida
+        RemoteViews views;
 
-
-
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+        if (width < 300)
+            views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+        else
+            views = new RemoteViews(context.getPackageName(), R.layout.widget_layout_big);
 
         views.setTextViewText(R.id.widget_title, recipeName);
 
@@ -42,6 +46,10 @@ public class NewAppWidget extends AppWidgetProvider {
 
 //        TODO (5): Caso o layout utilizado contenha a lista de etapas de preparação da receita,
 //         a atualizamos com as informações correspondentes
+        if (width > 300) {
+            Intent updateStepsListIntent = new Intent(context, WidgetServiceListSteps.class);
+            views.setRemoteAdapter(R.id.widget_list_steps, updateStepsListIntent);
+        }
 
 
         // Instruct the widget manager to update the widget
@@ -63,7 +71,7 @@ public class NewAppWidget extends AppWidgetProvider {
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list_ingredients);
 
 //            TODO (6): Notificamos também o adapter da lista de etapas de que suas informações foram atualizadas
-
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list_steps);
 
 
             for (int appWidgetId : appWidgetIds) {
@@ -76,5 +84,11 @@ public class NewAppWidget extends AppWidgetProvider {
 //    TODO (2): Sobrescrever método onAppWidgetOptionsChanged para fazer com que o widget
 //     seja sempre atualizado quando suas configurações de tamanho mudarem
 
+
+    @Override
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
+        updateAppWidget(context, appWidgetManager, appWidgetId);
+    }
 }
 
