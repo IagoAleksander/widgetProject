@@ -32,9 +32,11 @@
                 android:resource="@xml/new_app_widget_info" />
         </receiver>
 
-        <!--        TODO (9): E por fim registramos o adapter no manifest-->
         <service
             android:name=".WidgetServiceListIngredients"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+<!--        TODO (7): E o adicionamos ao manifest-->
+        
     </application>
 </manifest>

@@ -2,20 +2,22 @@ package com.iaz.receitas;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
-import android.widget.TextView;
-
 
 import com.iaz.receitas.database.AppDatabase;
-import com.iaz.receitas.database.models.Ingredient;
+import com.iaz.receitas.database.models.Step;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import static com.iaz.receitas.NewAppWidget.recipeId;
 
-public class WidgetServiceListIngredients extends RemoteViewsService {
-    private List<String> ingredientsList;
+
+public class WidgetServiceListSteps extends RemoteViewsService {
+    private List<String> stepsList;
+
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
@@ -35,29 +37,22 @@ public class WidgetServiceListIngredients extends RemoteViewsService {
 
         }
 
-
         @Override
         public void onDataSetChanged() {
             ArrayList<String> recipeIngredientsForWidgets = new ArrayList<>();
 
             AppDatabase mDb = AppDatabase.getInstance(mContext);
-            ArrayList<Ingredient> ingredients = new ArrayList<>(mDb.ingredientDao().loadAllIngredientsFromRecipe(recipeId));
+            ArrayList<Step> steps = new ArrayList<>(mDb.stepDao().loadAllStepsFromRecipe(recipeId));
 
-            for (Ingredient ingredient : ingredients) {
-                StringBuilder ingredientString = new StringBuilder();
-
-                if (!ingredient.getQuantity().isEmpty()) {
-                    ingredientString.append(String.format("- %s", ingredient.getQuantity()));
-                    ingredientString.append(String.format(" %s", ingredient.getMeasure()));
-                    ingredientString.append(String.format(" de %s", ingredient.getIngredient()));
+            for (Step step : steps) {
+                if (step.getDescription().isEmpty()) {
+                    recipeIngredientsForWidgets.add(String.format("-- %s --", step.getShortDescription()).toUpperCase());
                 } else {
-                    ingredientString.append(String.format("-- %s --", ingredient.getIngredient()).toUpperCase());
+                    recipeIngredientsForWidgets.add(String.format("%s", step.getDescription()));
                 }
-
-                recipeIngredientsForWidgets.add(ingredientString.toString());
             }
 
-            ingredientsList = recipeIngredientsForWidgets;
+            stepsList = recipeIngredientsForWidgets;
         }
 
         @Override
@@ -67,21 +62,15 @@ public class WidgetServiceListIngredients extends RemoteViewsService {
 
         @Override
         public int getCount() {
-            return ingredientsList.size();
+            return stepsList.size();
         }
 
         @Override
         public RemoteViews getViewAt(int i) {
-
             RemoteViews views;
 
-            if (ingredientsList.get(i).contains("--")) {
-                views = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_view_item_header);
-                views.setTextViewText(R.id.widget_list_view_item_header, ingredientsList.get(i));
-            } else {
-                views = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_view_item_standard);
-                views.setTextViewText(R.id.widget_list_view_item, ingredientsList.get(i));
-            }
+            views = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_view_item_standard);
+            views.setTextViewText(R.id.widget_list_view_item, stepsList.get(i));
 
             return views;
         }
@@ -93,7 +82,7 @@ public class WidgetServiceListIngredients extends RemoteViewsService {
 
         @Override
         public int getViewTypeCount() {
-            return 2;
+            return 1;
         }
 
         @Override

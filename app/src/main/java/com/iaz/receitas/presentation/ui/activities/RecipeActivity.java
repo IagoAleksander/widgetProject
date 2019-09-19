@@ -66,7 +66,6 @@ public class RecipeActivity extends AppCompatActivity {
 
                 });
 
-//        TODO (5): E passar o identificador para o Provider
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, NewAppWidget.class));
         NewAppWidget.updateWidgets(this, appWidgetManager, appWidgetIds, recipeId, recipeName);

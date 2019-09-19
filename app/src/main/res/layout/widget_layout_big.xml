@@ -1,0 +1,99 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/button_background"
+    android:padding="@dimen/widget_margin"
+    android:id="@+id/widget_layout"
+    android:orientation="vertical">
+
+<!--    TODO (1): Novo layout criado baseado para a adição da lista de ingredientes-->
+
+    <TextView
+        android:id="@+id/widget_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_centerHorizontal="true"/>
+
+    <LinearLayout
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorAccent"
+        android:orientation="vertical"
+        android:layout_below="@id/widget_title"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/divider"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ingredientes"
+                android:background="@color/colorAccent"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:padding="5dp"/>
+
+            <ListView
+                android:id="@+id/widget_list_ingredients"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:columnWidth="25dp"
+                android:divider="@null"
+                android:horizontalSpacing="5dp"
+                android:verticalSpacing="5dp"
+                tools:listitem="@layout/widget_list_view_item_standard"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/divider2"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"
+            android:orientation="horizontal" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Preparo"
+                android:background="@color/colorAccent"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:padding="5dp"/>
+
+            <ListView
+                android:id="@+id/widget_list_steps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:columnWidth="25dp"
+                android:divider="@null"
+                android:horizontalSpacing="5dp"
+                android:verticalSpacing="5dp"
+                tools:listitem="@layout/widget_list_view_item_standard"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

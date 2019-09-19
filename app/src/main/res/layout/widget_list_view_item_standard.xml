@@ -3,9 +3,6 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<!--    TODO (2): Adicione um TextView para ser usado para -->
-<!--    a exibição de cada ingrediente na lista-->
-
     <TextView
         android:id="@+id/widget_list_view_item"
         android:layout_width="match_parent"
