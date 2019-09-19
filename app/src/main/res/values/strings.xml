@@ -9,4 +9,6 @@
     <string name="recipe_steps_button">Modo de preparo</string>
     <string name="recipe_ingredients_button">Ingredientes</string>
     <string name="servings">"Porções:"</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>
