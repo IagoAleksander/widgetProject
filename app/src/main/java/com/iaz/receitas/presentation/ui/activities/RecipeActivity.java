@@ -51,13 +51,17 @@ public class RecipeActivity extends AppCompatActivity {
         // recover selected recipe id, name
         if (getIntent().getExtras() != null) {
             recipeId = getIntent().getExtras().getLong(RECIPE_ID);
-            recipeName = getIntent().getExtras().getString(RECIPE_NAME);
             sectionType = getIntent().getStringExtra(SECTION_TYPE);
         }
 
         // set recipe name as action bar title
-        if (getSupportActionBar() != null)
-            getSupportActionBar().setTitle(recipeName);
+        mDb.recipeDao().loadRecipeSingle(recipeId)
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(recipe -> {
+                    if (getSupportActionBar() != null)
+                        getSupportActionBar().setTitle(recipe.getName());
+                });
 
         if (sectionType == null || sectionType.equals(INGREDIENTS)) {
             // recover ingredients of chosen recipe from database to list
@@ -80,7 +84,7 @@ public class RecipeActivity extends AppCompatActivity {
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, NewAppWidget.class));
-        NewAppWidget.updateWidgets(this, appWidgetManager, appWidgetIds, recipeId, recipeName);
+        NewAppWidget.updateWidgets(this, appWidgetManager, appWidgetIds, recipeId);
     }
 
     @SuppressLint("CheckResult")

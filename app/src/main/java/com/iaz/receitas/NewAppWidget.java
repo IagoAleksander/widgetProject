@@ -7,10 +7,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.iaz.receitas.presentation.ui.activities.RecipeActivity;
 
+import static com.iaz.receitas.util.Constants.ACTION_SHOW_NEXT_RECIPE;
 import static com.iaz.receitas.util.Constants.ACTION_SHOW_PREVIOUS_RECIPE;
 
 /**
@@ -21,7 +23,6 @@ import static com.iaz.receitas.util.Constants.ACTION_SHOW_PREVIOUS_RECIPE;
 public class NewAppWidget extends AppWidgetProvider {
 
     static Long recipeId;
-    static String recipeName;
     static int width;
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
@@ -47,13 +48,31 @@ public class NewAppWidget extends AppWidgetProvider {
             Intent updateStepsListIntent = new Intent(context, WidgetServiceListSteps.class);
             views.setRemoteAdapter(R.id.widget_list_steps, updateStepsListIntent);
 
-            Intent broadcastPreviousRecipeIntent = new Intent(context, NewAppWidget.class);
-            broadcastPreviousRecipeIntent.setAction(ACTION_SHOW_PREVIOUS_RECIPE);
-            PendingIntent broadcastPreviousRecipePendingIntent = PendingIntent.getBroadcast(context, 0, broadcastPreviousRecipeIntent, 0);
-            views.setOnClickPendingIntent(R.id.button, broadcastPreviousRecipePendingIntent);
-
 //            TODO (2): Replicar as configurações acima para o botão de próxima receita
 
+            if (recipeId <= 0) {
+                views.setViewVisibility(R.id.button, View.GONE);
+            }
+            else {
+                views.setViewVisibility(R.id.button, View.VISIBLE);
+
+                Intent broadcastPreviousRecipeIntent = new Intent(context, NewAppWidget.class);
+                broadcastPreviousRecipeIntent.setAction(ACTION_SHOW_PREVIOUS_RECIPE);
+                PendingIntent broadcastPreviousRecipePendingIntent = PendingIntent.getBroadcast(context, 0, broadcastPreviousRecipeIntent, 0);
+                views.setOnClickPendingIntent(R.id.button, broadcastPreviousRecipePendingIntent);
+            }
+
+            if (recipeId >= 3) {
+                views.setViewVisibility(R.id.button2, View.GONE);
+            }
+            else {
+                views.setViewVisibility(R.id.button2, View.VISIBLE);
+
+                Intent broadcastNextRecipeIntent = new Intent(context, NewAppWidget.class);
+                broadcastNextRecipeIntent.setAction(ACTION_SHOW_NEXT_RECIPE);
+                PendingIntent broadcastNextRecipePendingIntent = PendingIntent.getBroadcast(context, 0, broadcastNextRecipeIntent, 0);
+                views.setOnClickPendingIntent(R.id.button2, broadcastNextRecipePendingIntent);
+            }
         }
 
         Intent appIntent;
@@ -74,14 +93,10 @@ public class NewAppWidget extends AppWidgetProvider {
     }
 
 //    TODO (5): Remover recipeName
-    public static void updateWidgets(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds, Long recipeIdForWidget, String recipeNameForWidget) {
+    public static void updateWidgets(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds, Long recipeIdForWidget) {
 
         if (recipeIdForWidget != null) {
             recipeId = recipeIdForWidget;
-        }
-
-        if (recipeNameForWidget != null) {
-            recipeName = recipeNameForWidget;
         }
 
         if (recipeId != null) {
@@ -117,6 +132,10 @@ public class NewAppWidget extends AppWidgetProvider {
         }
 
         // TODO (4): Replique para o botão de próximo
+
+        if (ACTION_SHOW_NEXT_RECIPE.equals(intent.getAction())) {
+            NewAppWidget.updateWidgets(context, appWidgetManager, appWidgetIds, recipeId+1);
+        }
     }
 }
 

@@ -11,4 +11,5 @@ public class Constants {
     public static final String STEPS = "steps";
 
     public static final String ACTION_SHOW_PREVIOUS_RECIPE = "show_previous_recipe";
+    public static final String ACTION_SHOW_NEXT_RECIPE = "show_next_recipe";
 }
