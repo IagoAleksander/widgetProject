@@ -32,5 +32,5 @@
                 android:resource="@xml/new_app_widget_info" />
         </receiver>
     </application>
-
+    <!--        TODO (9): E por fim registramos o adapter no manifest-->
 </manifest>
