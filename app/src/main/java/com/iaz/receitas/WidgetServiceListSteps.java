@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.iaz.receitas.NewAppWidget.recipeId;
+import static com.iaz.receitas.util.Constants.INGREDIENTS;
+import static com.iaz.receitas.util.Constants.RECIPE_ID;
+import static com.iaz.receitas.util.Constants.SECTION_TYPE;
+import static com.iaz.receitas.util.Constants.STEPS;
 
 
 public class WidgetServiceListSteps extends RemoteViewsService {
@@ -72,14 +76,25 @@ public class WidgetServiceListSteps extends RemoteViewsService {
 
 
             RemoteViews views;
+            Bundle extras = new Bundle();
+            extras.putString(SECTION_TYPE, STEPS);
+            extras.putLong(RECIPE_ID, recipeId);
+
+            Intent fillInIntent = new Intent();
+            fillInIntent.putExtras(extras);
 
             if (stepsList.get(i).contains("--")) {
                 views = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_view_item_header);
                 views.setTextViewText(R.id.widget_list_view_item_header, stepsList.get(i));
+
+                views.setOnClickFillInIntent(R.id.widget_list_view_item_header, fillInIntent);
+
             }
             else {
                 views = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_view_item_standard);
                 views.setTextViewText(R.id.widget_list_view_item, stepsList.get(i));
+
+                views.setOnClickFillInIntent(R.id.widget_list_view_item, fillInIntent);
             }
 
             return views;

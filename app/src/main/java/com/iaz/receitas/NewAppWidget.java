@@ -48,6 +48,17 @@ public class NewAppWidget extends AppWidgetProvider {
 //                encapsule o intent em um PendingIntent e ligue uma collectionView com esse PendingIntent
 //                utilizando um PendingIntentTemplate. Faremos isso para as listas de ingredientes e modo de preparo.
 
+        Intent appIntent;
+        appIntent = new Intent(context, RecipeActivity.class);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        views.setPendingIntentTemplate(R.id.widget_title, pendingIntent);
+        views.setPendingIntentTemplate(R.id.widget_list_ingredients, pendingIntent);
+
+        if (width > 300) {
+            views.setPendingIntentTemplate(R.id.widget_list_steps, pendingIntent);
+        }
 
 
         // Instruct the widget manager to update the widget
