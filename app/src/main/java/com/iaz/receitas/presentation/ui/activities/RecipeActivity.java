@@ -25,8 +25,10 @@ import java.util.ArrayList;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.iaz.receitas.util.Constants.INGREDIENTS;
 import static com.iaz.receitas.util.Constants.RECIPE_ID;
 import static com.iaz.receitas.util.Constants.RECIPE_NAME;
+import static com.iaz.receitas.util.Constants.SECTION_TYPE;
 
 public class RecipeActivity extends AppCompatActivity {
 
@@ -35,6 +37,7 @@ public class RecipeActivity extends AppCompatActivity {
     private ActivityRecipeBinding binding;
     private RecipeIngredientsAdapter ingredientsAdapter;
     private RecipeStepsAdapter stepsAdapter;
+    private String sectionType;
     private AppDatabase mDb;
 
     @SuppressLint("CheckResult")
@@ -49,22 +52,36 @@ public class RecipeActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             recipeId = getIntent().getExtras().getLong(RECIPE_ID);
             recipeName = getIntent().getExtras().getString(RECIPE_NAME);
+            sectionType = getIntent().getStringExtra(SECTION_TYPE);
         }
 
         // set recipe name as action bar title
         if (getSupportActionBar() != null)
             getSupportActionBar().setTitle(recipeName);
 
-        // recover ingredients of chosen recipe from database to list
-        // (rxJava used to access database from computation thread)
-        mDb.ingredientDao().loadAllIngredientsFromRecipeSingle(recipeId)
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(recipes -> {
 
-                        setAdapterIngredients(new ArrayList<>(recipes));
+//        TODO (5): Modificações necessárias para o tratamento personalizado da intent adicionadas
+//         pela analise do parametro sectionType
 
-                });
+
+        if (sectionType == null || sectionType.equals(INGREDIENTS)) {
+            // recover ingredients of chosen recipe from database to list
+            // (rxJava used to access database from computation thread)
+            mDb.ingredientDao().loadAllIngredientsFromRecipeSingle(recipeId)
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(recipes ->
+
+                            setAdapterIngredients(new ArrayList<>(recipes)));
+
+        } else {
+            mDb.stepDao().loadAllStepsFromRecipeSingle(recipeId)
+                    .subscribeOn(Schedulers.computation())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(steps ->
+
+                            setAdapterSteps(new ArrayList<>(steps)));
+        }
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, NewAppWidget.class));
