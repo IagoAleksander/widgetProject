@@ -1,25 +1,30 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#09C"
-    android:padding="@dimen/widget_margin">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/button_background"
+    android:gravity="center"
+    android:orientation="vertical">
 
-<!--TODO (1): customize o arquivo de layout. -->
-<!--    Aqui é definido como será a aparência do widget -->
-<!--    quando adicionado na home screen-->
+    <!--TODO (1): customize o arquivo de layout. -->
+    <!--    Aqui é definido como será a aparência do widget -->
+    <!--    quando adicionado na home screen-->
 
     <TextView
         android:id="@+id/appwidget_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:layout_margin="8dp"
-        android:background="#09C"
-        android:contentDescription="@string/appwidget_text"
         android:text="@string/appwidget_text"
-        android:textColor="#ffffff"
-        android:textSize="24sp"
+        android:textSize="12sp"
         android:textStyle="bold|italic" />
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/widget_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_receipt"
+        android:padding="8dp"/>
+
+
+</LinearLayout>
