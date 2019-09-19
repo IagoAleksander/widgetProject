@@ -69,8 +69,14 @@ public class WidgetServiceListSteps extends RemoteViewsService {
         public RemoteViews getViewAt(int i) {
             RemoteViews views;
 
-            views = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_view_item_standard);
-            views.setTextViewText(R.id.widget_list_view_item, stepsList.get(i));
+            if (stepsList.get(i).contains("--")) {
+                views = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_view_item_header);
+                views.setTextViewText(R.id.widget_list_view_item_header, stepsList.get(i));
+            }
+            else {
+                views = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_view_item_standard);
+                views.setTextViewText(R.id.widget_list_view_item, stepsList.get(i));
+            }
 
             return views;
         }
@@ -82,12 +88,12 @@ public class WidgetServiceListSteps extends RemoteViewsService {
 
         @Override
         public int getViewTypeCount() {
-            return 1;
+            return 2;
         }
 
         @Override
         public long getItemId(int i) {
-            return i;
+            return 1;
         }
 
         @Override
