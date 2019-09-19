@@ -2,6 +2,7 @@ package com.iaz.receitas;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import com.iaz.receitas.database.models.Ingredient;
 import java.util.ArrayList;
 import java.util.List;
 import static com.iaz.receitas.NewAppWidget.recipeId;
+import static com.iaz.receitas.util.Constants.*;
 
 public class WidgetServiceListIngredients extends RemoteViewsService {
     private List<String> ingredientsList;
@@ -73,14 +75,33 @@ public class WidgetServiceListIngredients extends RemoteViewsService {
         @Override
         public RemoteViews getViewAt(int i) {
 
+//            TODO (2): Agora, em cada um dos RemoteViewServices, devemos criar um intent e preenche-lo
+//             com os parâmetros extras desejados. No caso o tipo de lista que estamos clicando
+//             (ingredientes ou etapas) e o identificador da receita exibida no widget.
+
             RemoteViews views;
+            Bundle extras = new Bundle();
+            extras.putString(SECTION_TYPE, INGREDIENTS);
+            extras.putLong(RECIPE_ID, recipeId);
+
+            Intent fillInIntent = new Intent();
+            fillInIntent.putExtras(extras);
+
+//            TODO (3): Depois de criado, para preencher o pendingIntentTemplate, usamos
+//             setOnClickFillInIntent ligando a view a ser clicada e o intent recem criado
 
             if (ingredientsList.get(i).contains("--")) {
                 views = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_view_item_header);
                 views.setTextViewText(R.id.widget_list_view_item_header, ingredientsList.get(i));
+
+                views.setOnClickFillInIntent(R.id.widget_grid_view_item_header, fillInIntent);
+
             } else {
                 views = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_view_item_standard);
                 views.setTextViewText(R.id.widget_list_view_item, ingredientsList.get(i));
+
+                views.setOnClickFillInIntent(R.id.widget_grid_view_item, fillInIntent);
+
             }
 
             return views;

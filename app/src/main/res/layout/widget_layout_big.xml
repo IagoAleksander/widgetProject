@@ -7,8 +7,6 @@
     android:id="@+id/widget_layout"
     android:orientation="vertical">
 
-<!--    TODO (1): Novo layout criado baseado para a adição da lista de ingredientes-->
-
     <TextView
         android:id="@+id/widget_title"
         android:layout_width="wrap_content"

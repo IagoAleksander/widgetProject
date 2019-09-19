@@ -67,6 +67,10 @@ public class WidgetServiceListSteps extends RemoteViewsService {
 
         @Override
         public RemoteViews getViewAt(int i) {
+
+//            TODO (4): Façamos o mesmo para o RemoteViewService de modo de preparo
+
+
             RemoteViews views;
 
             if (stepsList.get(i).contains("--")) {
