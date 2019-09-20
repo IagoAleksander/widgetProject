@@ -1,6 +1,8 @@
 package com.iaz.receitas.presentation.ui.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +36,13 @@ public class SelectRecipeActivity extends AppCompatActivity {
 
         // recover recipes from the database. If there are no saved recipes in the
         // database, new ones are generated and recovered to be displayed in the adapter
+
+        // Numero de receitas adicionado no shared preferences para configuração do widget
+        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.pref_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(getString(R.string.number_of_recipes), 4);
+        editor.apply();
+
         setRecipesAdapter(savedInstanceState);
     }
 

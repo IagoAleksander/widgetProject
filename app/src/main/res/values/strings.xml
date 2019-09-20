@@ -11,4 +11,7 @@
     <string name="servings">"Porções:"</string>
     <string name="appwidget_text">Escolha uma receita</string>
     <string name="add_widget">Add widget</string>
+
+    <string name="pref_key">shared_preferences</string>
+    <string name="number_of_recipes">number_of_recipes</string>
 </resources>
