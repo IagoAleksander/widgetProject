@@ -12,7 +12,6 @@
         android:id="@+id/widget_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/layout_buttons"
         android:layout_marginBottom="2dp"
         tools:layout_height="50dp"/>
 
