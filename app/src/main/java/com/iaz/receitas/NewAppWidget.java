@@ -48,8 +48,6 @@ public class NewAppWidget extends AppWidgetProvider {
             Intent updateStepsListIntent = new Intent(context, WidgetServiceListSteps.class);
             views.setRemoteAdapter(R.id.widget_list_steps, updateStepsListIntent);
 
-//            TODO (2): Replicar as configurações acima para o botão de próxima receita
-
             // Obter o número de receitas a partir do Shared Preferences para configuração dos botões
             SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.pref_key), Context.MODE_PRIVATE);
             int numberOfRecipes = sharedPreferences.getInt(context.getString(R.string.number_of_recipes), 0);
@@ -94,7 +92,6 @@ public class NewAppWidget extends AppWidgetProvider {
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
-    //    TODO (5): Remover recipeName
     public static void updateWidgets(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds, Long recipeIdForWidget) {
 
         if (recipeIdForWidget != null) {
@@ -119,9 +116,6 @@ public class NewAppWidget extends AppWidgetProvider {
         updateAppWidget(context, appWidgetManager, appWidgetId);
     }
 
-    // TODO (3): Para capturar essa transmissão, sobrescrevemos o método onReceive do Provider e definimos a ação desejada.
-    //  No caso, mudar a receita exibida no widget.
-
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
@@ -132,8 +126,6 @@ public class NewAppWidget extends AppWidgetProvider {
         if (ACTION_SHOW_PREVIOUS_RECIPE.equals(intent.getAction())) {
             NewAppWidget.updateWidgets(context, appWidgetManager, appWidgetIds, recipeId - 1);
         }
-
-        // TODO (4): Replique para o botão de próximo
 
         if (ACTION_SHOW_NEXT_RECIPE.equals(intent.getAction())) {
             NewAppWidget.updateWidgets(context, appWidgetManager, appWidgetIds, recipeId + 1);
